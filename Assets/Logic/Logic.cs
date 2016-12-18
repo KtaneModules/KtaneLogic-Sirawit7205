@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 public class Logic : MonoBehaviour
 {
+    public KMAudio Audio;
     public KMSelectable[] buttons;
     public TextMesh[] info;
 
@@ -11,6 +12,8 @@ public class Logic : MonoBehaviour
     public bool[] tog;
     public int[] port, indc, batt, keys, num;
     public string serl;
+
+    private bool _isSolved;
 
     void Start()
     {
@@ -138,25 +141,38 @@ public class Logic : MonoBehaviour
 
     void HandlePress(int mode)
     {
-        if (tog[mode] == false)
+        Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, buttons[mode].transform);
+        buttons[mode].AddInteractionPunch();
+        if (!_isSolved)
         {
-            buttons[mode].GetComponent<MeshRenderer>().material.color = Color.green;
-            info[mode + 6].text = "T";
-            tog[mode] = true;
-        }
-        else
-        {
-            buttons[mode].GetComponent<MeshRenderer>().material.color = Color.red;
-            info[mode + 6].text = "F";
-            tog[mode] = false;
+            if (tog[mode] == false)
+            {
+                buttons[mode].GetComponent<MeshRenderer>().material.color = Color.green;
+                info[mode + 6].text = "T";
+                tog[mode] = true;
+            }
+            else
+            {
+                buttons[mode].GetComponent<MeshRenderer>().material.color = Color.red;
+                info[mode + 6].text = "F";
+                tog[mode] = false;
+            }
         }
     }
 
     void checkAns()
     {
-        if (tog[0] == ansA && tog[1] == ansB)
-            GetComponent<KMBombModule>().HandlePass();
-        else
-            GetComponent<KMBombModule>().HandleStrike();
+        Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, buttons[2].transform);
+        buttons[2].AddInteractionPunch();
+        if (!_isSolved)
+        {
+            if (tog[0] == ansA && tog[1] == ansB)
+            {
+                GetComponent<KMBombModule>().HandlePass();
+                _isSolved = true;
+            }
+            else
+                GetComponent<KMBombModule>().HandleStrike();
+        }
     }
 }
