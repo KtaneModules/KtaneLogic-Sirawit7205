@@ -1,0 +1,7 @@
+o Square
+v 1 0 1
+v 1 0 -1
+v -1 0 -1
+v -1 0 1
+g Square
+f 1 2 3 4
