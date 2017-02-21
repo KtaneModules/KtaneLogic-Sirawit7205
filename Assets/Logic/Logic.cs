@@ -15,8 +15,12 @@ public class Logic : MonoBehaviour
 
     private bool _isSolved;
 
+    private static int _moduleIdCounter = 1;
+    private int _moduleId;
+
     void Start()
     {
+        _moduleId = _moduleIdCounter++;
         GetComponent<KMBombModule>().OnActivate += Init;
     }
 
@@ -100,7 +104,6 @@ public class Logic : MonoBehaviour
                 port[6]++;
         }
         generateAns();
-        Debug.Log("[Logic] ready! Answers generated!");
     }
 
     void generateAns()
@@ -137,6 +140,9 @@ public class Logic : MonoBehaviour
 
         if (keys[num[0] - 65] == 1 && keys[num[1] - 65] == 1 && keys[num[2] - 65] == 1) ansA = true;
         if (keys[num[3] - 65] == 1 || keys[num[4] - 65] == 1 || keys[num[5] - 65] == 1) ansB = true;
+
+        Debug.LogFormat("[Logic #{0}] 1st row: {3} AND {2} AND {1} = {6} AND {5} AND {4} = {7}", _moduleId, (char) num[0], (char) num[1], (char) num[2], keys[num[0] - 65] == 1, keys[num[1] - 65] == 1, keys[num[2] - 65] == 1, ansA);
+        Debug.LogFormat("[Logic #{0}] 2nd row: {3} OR {2} OR {1} = {6} OR {5} OR {4} = {7}", _moduleId, (char) num[3], (char) num[4], (char) num[5], keys[num[3] - 65] == 1, keys[num[4] - 65] == 1, keys[num[5] - 65] == 1, ansB);
     }
 
     void HandlePress(int mode)
@@ -168,11 +174,15 @@ public class Logic : MonoBehaviour
         {
             if (tog[0] == ansA && tog[1] == ansB)
             {
+                Debug.LogFormat("[Logic #{0}] Module solved.", _moduleId);
                 GetComponent<KMBombModule>().HandlePass();
                 _isSolved = true;
             }
             else
+            {
+                Debug.LogFormat("[Logic #{0}] 1st row: {1} (should have been {2}). 2nd row: {3} (should have been {4}).", _moduleId, tog[0], ansA, tog[1], ansB);
                 GetComponent<KMBombModule>().HandleStrike();
+            }
         }
     }
 }
