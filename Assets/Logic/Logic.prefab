@@ -30,7 +30,7 @@ GameObject:
   - 102: {fileID: 10228484}
   - 114: {fileID: 114000011596623864}
   m_Layer: 0
-  m_Name: CounterText
+  m_Name: textA2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,7 +138,7 @@ GameObject:
   - 102: {fileID: 10260850}
   - 114: {fileID: 114000010537006832}
   m_Layer: 0
-  m_Name: CounterText
+  m_Name: textA3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,7 +193,7 @@ GameObject:
   - 102: {fileID: 10271692}
   - 114: {fileID: 114000013904975458}
   m_Layer: 0
-  m_Name: CounterText
+  m_Name: textB1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +248,7 @@ GameObject:
   - 102: {fileID: 10273048}
   - 114: {fileID: 114000011984169672}
   m_Layer: 0
-  m_Name: CounterText
+  m_Name: textB3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,7 +335,7 @@ GameObject:
   - 102: {fileID: 10285452}
   - 114: {fileID: 114000013759895094}
   m_Layer: 0
-  m_Name: CounterText
+  m_Name: textB2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -373,7 +373,7 @@ GameObject:
   - 102: {fileID: 10212478}
   - 114: {fileID: 114000010798271708}
   m_Layer: 0
-  m_Name: CounterText
+  m_Name: textA1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1667,7 +1667,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 174768}
-  m_Text: "\u2229"
+  m_Text: '-'
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -1688,15 +1688,15 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 112444}
-  m_Text: "\u22C3"
+  m_Text: '-'
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 52
-  m_FontStyle: 0
+  m_FontSize: 43
+  m_FontStyle: 1
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
   m_Color:
@@ -1847,24 +1847,31 @@ MonoBehaviour:
   - {fileID: 11439196}
   - {fileID: 11412838}
   - {fileID: 11405836}
-  info:
-  - {fileID: 10260850}
-  - {fileID: 10228484}
+  Text:
   - {fileID: 10212478}
-  - {fileID: 10273048}
-  - {fileID: 10285452}
+  - {fileID: 10228484}
+  - {fileID: 10260850}
   - {fileID: 10271692}
+  - {fileID: 10285452}
+  - {fileID: 10273048}
   - {fileID: 10203668}
   - {fileID: 10218664}
-  ansA: 0
-  ansB: 0
+  sym:
+  - {fileID: 102000013360436146}
+  - {fileID: 10229366}
+  - {fileID: 102000010087443200}
+  - {fileID: 10260434}
+  Bomb: {fileID: 11417704}
   tog: 0000
-  port: 00000000000000000000000000000000000000000000000000000000
-  indc: 0000000000000000000000000000000000000000000000000000000000000000
-  batt: 00000000
-  keys: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  truthTable: 0000000000000000000000000000000000000000000000000000
+  ans: 0000
   num: 000000000000000000000000000000000000000000000000
-  serl: 000000
+  randomSym: 00000000000000000000000000000000
+  paren: 0000000000000000
+  indcCounts: 0
+  symText:
+  - AND
+  - OR
 --- !u!114 &11412838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2096,7 +2103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013259658418}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.04175, y: 0.0152, z: 0.021}
+  m_LocalPosition: {x: -0.0427, y: 0.0152, z: 0.021}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children: []
@@ -2109,7 +2116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013410003788}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.04175, y: 0.0152, z: -0.021}
+  m_LocalPosition: {x: -0.0427, y: 0.0152, z: -0.021}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children: []
@@ -2180,15 +2187,15 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013410003788}
-  m_Text: "\u22C3"
+  m_Text: '-'
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 52
-  m_FontStyle: 0
+  m_FontSize: 43
+  m_FontStyle: 1
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
   m_Color:
@@ -2201,7 +2208,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013259658418}
-  m_Text: "\u2229"
+  m_Text: '-'
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
