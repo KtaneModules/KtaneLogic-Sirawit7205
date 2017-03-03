@@ -130,26 +130,26 @@ public class Logic : MonoBehaviour
             if (paren[i] == 0)
             {
                 if (randomSym[i * 2] == 0 && randomSym[(i * 2) + 1] == 0)
-                    if ((temp[i * 3] && temp[(i * 3) + 1]) && temp[(i * 3) + 2] == true) ans[0] = true;
+                    if ((temp[i * 3] && temp[(i * 3) + 1]) && temp[(i * 3) + 2] == true) ans[i] = true;
                 if (randomSym[i * 2] == 0 && randomSym[(i * 2) + 1] == 1)
-                    if ((temp[i * 3] && temp[(i * 3) + 1]) || temp[(i * 3) + 2] == true) ans[0] = true;
+                    if ((temp[i * 3] && temp[(i * 3) + 1]) || temp[(i * 3) + 2] == true) ans[i] = true;
                 if (randomSym[i * 2] == 1 && randomSym[(i * 2) + 1] == 0)
-                    if ((temp[i * 3] || temp[(i * 3) + 1]) && temp[(i * 3) + 2] == true) ans[0] = true;
+                    if ((temp[i * 3] || temp[(i * 3) + 1]) && temp[(i * 3) + 2] == true) ans[i] = true;
                 if (randomSym[i * 2] == 1 && randomSym[(i * 2) + 1] == 1)
-                    if ((temp[i * 3] || temp[(i * 3) + 1]) || temp[(i * 3) + 2] == true) ans[0] = true;
+                    if ((temp[i * 3] || temp[(i * 3) + 1]) || temp[(i * 3) + 2] == true) ans[i] = true;
 
                 Debug.LogFormat("[Logic #{0}] Row #{1}: ({2} {3} {4}) {5} {6} = {7}", _moduleId, i + 1, (char)num[i * 3], symText[randomSym[i * 2]], (char)num[(i * 3) + 1], symText[randomSym[(i * 2) + 1]], (char)num[(i * 3) + 2], ans[i]);
             }
             else
             {
                 if (randomSym[i * 2] == 0 && randomSym[(i * 2) + 1] == 0)
-                    if (temp[i * 3] && (temp[(i * 3) + 1] && temp[(i * 3) + 2]) == true) ans[0] = true;
+                    if (temp[i * 3] && (temp[(i * 3) + 1] && temp[(i * 3) + 2]) == true) ans[i] = true;
                 if (randomSym[i * 2] == 0 && randomSym[(i * 2) + 1] == 1)
-                    if (temp[i * 3] && (temp[(i * 3) + 1] || temp[(i * 3) + 2]) == true) ans[0] = true;
+                    if (temp[i * 3] && (temp[(i * 3) + 1] || temp[(i * 3) + 2]) == true) ans[i] = true;
                 if (randomSym[i * 2] == 1 && randomSym[(i * 2) + 1] == 0)
-                    if (temp[i * 3] || (temp[(i * 3) + 1] && temp[(i * 3) + 2]) == true) ans[0] = true;
+                    if (temp[i * 3] || (temp[(i * 3) + 1] && temp[(i * 3) + 2]) == true) ans[i] = true;
                 if (randomSym[i * 2] == 1 && randomSym[(i * 2) + 1] == 1)
-                    if (temp[i * 3] || (temp[(i * 3) + 1] || temp[(i * 3) + 2]) == true) ans[0] = true;
+                    if (temp[i * 3] || (temp[(i * 3) + 1] || temp[(i * 3) + 2]) == true) ans[i] = true;
 
                 Debug.LogFormat("[Logic #{0}] Row #{1}: {2} {3} ({4} {5} {6}) = {7}", _moduleId, i + 1, (char)num[i * 3], symText[randomSym[i * 2]], (char)num[(i * 3) + 1], symText[randomSym[(i * 2) + 1]], (char)num[(i * 3) + 2], ans[i]);
             }
