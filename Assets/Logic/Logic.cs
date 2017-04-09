@@ -196,4 +196,16 @@ public class Logic : MonoBehaviour
             }
         }
     }
+
+    KMSelectable[] ProcessTwitchCommand(string command)
+    {
+        switch(command.ToLowerInvariant().Trim())
+        {
+            case "tog up": case "togup": case "toggle up": case "toggle upper": return new[] { buttons[0] };
+            case "tog down": case "togdown": case "toggle down": case "toggle lower": return new[] { buttons[1] };
+            case "submit": return new[] { buttons[2] };
+        }
+
+        return null;
+    }
 }
