@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using KMHelper;
 
 public class Logic : MonoBehaviour
@@ -199,13 +201,24 @@ public class Logic : MonoBehaviour
 
     KMSelectable[] ProcessTwitchCommand(string command)
     {
-        switch(command.ToLowerInvariant().Trim())
+        var btn = new List<KMSelectable>();
+        int temp = 0;
+
+        command = command.ToLowerInvariant().Trim();
+
+        if (Regex.IsMatch(command, @"^submit \b(true|false|t|f)\b \b(true|false|t|f)\b$"))
         {
-            case "tog up": case "togup": case "toggle up": case "toggle upper": return new[] { buttons[0] };
-            case "tog down": case "togdown": case "toggle down": case "toggle lower": return new[] { buttons[1] };
-            case "submit": return new[] { buttons[2] };
+            command = command.Substring(7);
+            foreach (var cell in command.Trim().Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries))
+            {
+                if ((cell.Equals("t") || cell.Equals("true")) && tog[temp] == false) btn.Add(buttons[temp]);
+                if ((cell.Equals("f") || cell.Equals("false")) && tog[temp] == true) btn.Add(buttons[temp]);
+                temp++;
+            }
+            btn.Add(buttons[2]);
+            return btn.ToArray();
         }
 
-        return null;
+        else return null;
     }
 }
