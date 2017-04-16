@@ -16,7 +16,7 @@ public class Logic : MonoBehaviour
     public int indcCounts;
     public string[] symText = { "AND", "OR" };
 
-    private bool _isSolved;
+    private bool _isSolved = false, _lightson = false;
 
     private static int _moduleIdCounter = 1;
     private int _moduleId;
@@ -87,6 +87,7 @@ public class Logic : MonoBehaviour
             else sym[i].text = "∨";
         }
         generateAns();
+        _lightson = true;
     }
 
     void generateAns()
@@ -162,7 +163,7 @@ public class Logic : MonoBehaviour
     {
         Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, buttons[mode].transform);
         buttons[mode].AddInteractionPunch();
-        if (!_isSolved)
+        if (!_isSolved && _lightson)
         {
             if (tog[mode] == false)
             {
@@ -183,7 +184,7 @@ public class Logic : MonoBehaviour
     {
         Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, buttons[2].transform);
         buttons[2].AddInteractionPunch();
-        if (!_isSolved)
+        if (!_isSolved && _lightson)
         {
             if (tog[0] == ans[0] && tog[1] == ans[1])
             {
