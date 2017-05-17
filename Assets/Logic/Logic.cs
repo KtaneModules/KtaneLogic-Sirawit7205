@@ -124,9 +124,10 @@ public class Logic : MonoBehaviour
 
         //Check Answers for each row
         for (int i = 0; i < 6; i++) temp[i] = truthTable[num[i] - 65];
-        Debug.LogFormat("[Logic #{0}] Truth table for symbols: {1} = {2} {3} = {4} {5} = {6}\n{7} = {8} {9} = {10} {11} = {12}",
-            _moduleId, (char)num[0], temp[0], (char)num[1], temp[1], (char)num[2], temp[2],
-            (char)num[3], temp[3], (char)num[4], temp[4], (char)num[5], temp[5]);
+        Debug.LogFormat("[Logic #{0}] Truth table for symbols (row #1): {1} = {2} {3} = {4} {5} = {6}",
+            _moduleId, (char)num[0], temp[0], (char)num[1], temp[1], (char)num[2], temp[2]);
+		Debug.LogFormat("[Logic #{0}] Truth table for symbols (row #2): {1} = {2} {3} = {4} {5} = {6}",
+            _moduleId, (char)num[3], temp[3], (char)num[4], temp[4], (char)num[5], temp[5]);
 
         for(int i=0;i<2;i++)
         {
