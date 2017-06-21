@@ -10,11 +10,12 @@ public class Logic : MonoBehaviour
     public KMSelectable[] buttons;
     public TextMesh[] Text, sym;
     public KMBombInfo Bomb;
+    public MeshRenderer[] notIndc;
 
-    public bool[] tog, truthTable, ans = { false, false };
+    public bool[] tog, truthTable, ans = { false, false }, isNot;
     public int[] num, randomSym, paren = { 0, 0 };
     public int indcCounts;
-    public string[] symText = { "AND", "OR" };
+    public string[] symText = { "AND", "OR", "XOR", "NAND", "NOR", "XNOR", "→", "←" };
 
     private bool _isSolved = false, _lightson = false;
 
@@ -55,7 +56,7 @@ public class Logic : MonoBehaviour
             Text[i].text = char.ConvertFromUtf32(num[i]);
         }
 
-        //Randomize parentheses and truth symbols
+        //Randomize parentheses
         paren[0] = Random.Range(0, 2);
         if(paren[0] == 0)
         {
@@ -80,19 +81,39 @@ public class Logic : MonoBehaviour
             Text[5].color = Color.green;
         }
 
+        //logic symbols
         for (int i = 0; i < 4; i++)
         {
-            randomSym[i] = Random.Range(0, 2);
-            if (randomSym[i] == 0) sym[i].text = "∧";
-            else sym[i].text = "∨";
+            randomSym[i] = Random.Range(0, 8);
+            if (randomSym[i] == 0) sym[i].text = "∧"; //AND
+            else if (randomSym[i] == 1) sym[i].text = "∨"; //OR
+            else if (randomSym[i] == 2) sym[i].text = "⊻"; //XOR
+            else if (randomSym[i] == 3) sym[i].text = "|"; //NAND
+            else if (randomSym[i] == 4) sym[i].text = "↓"; //NOR
+            else if (randomSym[i] == 5) sym[i].text = "↔"; //XNOR
+            else if (randomSym[i] == 6) sym[i].text = "→"; //IMP LEFT
+            else sym[i].text = "←"; //IMP RIGHT
         }
+
+        //NOT case
+        for (int i = 0; i < 6; i++)
+        {
+            int rand = Random.Range(0, 2);
+            if (rand == 1)
+            {
+                notIndc[i].material.color = Color.red;
+                isNot[i] = true;
+            } 
+        }
+
         generateAns();
         _lightson = true;
     }
 
     void generateAns()
     {
-        bool[] temp = { false, false, false, false, false, false };
+        bool[] boolVal = { false, false, false, false, false, false };
+        string[] dbgSym = { "", "", "", "", "", "" };
 
         //Generate truth table for all letters
         if (Bomb.GetBatteryCount() == Bomb.GetIndicators().Count()) truthTable[0] = true;
@@ -123,40 +144,89 @@ public class Logic : MonoBehaviour
         if (Bomb.GetPorts().Count() < 2) truthTable[25] = true;
 
         //Check Answers for each row
-        for (int i = 0; i < 6; i++) temp[i] = truthTable[num[i] - 65];
+        for (int i = 0; i < 6; i++) boolVal[i] = truthTable[num[i] - 65];
+
         Debug.LogFormat("[Logic #{0}] Truth table for symbols (row #1): {1} = {2} {3} = {4} {5} = {6}",
-            _moduleId, (char)num[0], temp[0], (char)num[1], temp[1], (char)num[2], temp[2]);
+            _moduleId, (char)num[0], boolVal[0], (char)num[1], boolVal[1], (char)num[2], boolVal[2]);
 		Debug.LogFormat("[Logic #{0}] Truth table for symbols (row #2): {1} = {2} {3} = {4} {5} = {6}",
-            _moduleId, (char)num[3], temp[3], (char)num[4], temp[4], (char)num[5], temp[5]);
+            _moduleId, (char)num[3], boolVal[3], (char)num[4], boolVal[4], (char)num[5], boolVal[5]);
 
-        for(int i=0;i<2;i++)
+        for (int i = 0; i < 6; i++)
         {
-            if (paren[i] == 0)
+            if (isNot[i] == true)
             {
-                if (randomSym[i * 2] == 0 && randomSym[(i * 2) + 1] == 0)
-                    if ((temp[i * 3] && temp[(i * 3) + 1]) && temp[(i * 3) + 2] == true) ans[i] = true;
-                if (randomSym[i * 2] == 0 && randomSym[(i * 2) + 1] == 1)
-                    if ((temp[i * 3] && temp[(i * 3) + 1]) || temp[(i * 3) + 2] == true) ans[i] = true;
-                if (randomSym[i * 2] == 1 && randomSym[(i * 2) + 1] == 0)
-                    if ((temp[i * 3] || temp[(i * 3) + 1]) && temp[(i * 3) + 2] == true) ans[i] = true;
-                if (randomSym[i * 2] == 1 && randomSym[(i * 2) + 1] == 1)
-                    if ((temp[i * 3] || temp[(i * 3) + 1]) || temp[(i * 3) + 2] == true) ans[i] = true;
+                boolVal[i] = !boolVal[i];
+                dbgSym[i] = "¬" + (char)num[i];
+            }
+            else dbgSym[i] = "" + (char)num[i];
+        }
 
-                Debug.LogFormat("[Logic #{0}] Row #{1}: ({2} {3} {4}) {5} {6} = {7}", _moduleId, i + 1, (char)num[i * 3], symText[randomSym[i * 2]], (char)num[(i * 3) + 1], symText[randomSym[(i * 2) + 1]], (char)num[(i * 3) + 2], ans[i]);
+        for (int i = 0; i < 2; i++)
+        {
+            bool retTemp;
+            if(paren[i] == 0)
+            {
+                retTemp = calcLogic(boolVal[i * 3], boolVal[(i * 3) + 1], randomSym[i * 2]);
+                ans[i] = calcLogic(retTemp, boolVal[(i * 3) + 2], randomSym[(i * 2) + 1]);
+
+                Debug.LogFormat("[Logic #{0}] Row #{1}: ( {2} {3} {4} ) {5} {6} = {7}", _moduleId, i + 1,
+                    dbgSym[i * 3], symText[randomSym[i * 2]], dbgSym[(i * 3) + 1], symText[randomSym[(i * 2) + 1]], dbgSym[(i * 3) + 2], ans[i]);
             }
             else
             {
-                if (randomSym[i * 2] == 0 && randomSym[(i * 2) + 1] == 0)
-                    if (temp[i * 3] && (temp[(i * 3) + 1] && temp[(i * 3) + 2]) == true) ans[i] = true;
-                if (randomSym[i * 2] == 0 && randomSym[(i * 2) + 1] == 1)
-                    if (temp[i * 3] && (temp[(i * 3) + 1] || temp[(i * 3) + 2]) == true) ans[i] = true;
-                if (randomSym[i * 2] == 1 && randomSym[(i * 2) + 1] == 0)
-                    if (temp[i * 3] || (temp[(i * 3) + 1] && temp[(i * 3) + 2]) == true) ans[i] = true;
-                if (randomSym[i * 2] == 1 && randomSym[(i * 2) + 1] == 1)
-                    if (temp[i * 3] || (temp[(i * 3) + 1] || temp[(i * 3) + 2]) == true) ans[i] = true;
+                retTemp = calcLogic(boolVal[(i * 3) + 1], boolVal[(i * 3) + 2], randomSym[(i * 2) + 1]);
+                ans[i] = calcLogic(boolVal[i * 3], retTemp, randomSym[i * 2]);
 
-                Debug.LogFormat("[Logic #{0}] Row #{1}: {2} {3} ({4} {5} {6}) = {7}", _moduleId, i + 1, (char)num[i * 3], symText[randomSym[i * 2]], (char)num[(i * 3) + 1], symText[randomSym[(i * 2) + 1]], (char)num[(i * 3) + 2], ans[i]);
+                Debug.LogFormat("[Logic #{0}] Row #{1}: {2} {3} ( {4} {5} {6} ) = {7}", _moduleId, i + 1,
+                    dbgSym[i * 3], symText[randomSym[i * 2]], dbgSym[(i * 3) + 1], symText[randomSym[(i * 2) + 1]], dbgSym[(i * 3) + 2], ans[i]);
             }
+
+        }
+    }
+
+    bool calcLogic(bool left, bool right, int sym)
+    {
+        if(sym == 0) //AND
+        {
+            if (left == true && right == true) return true;
+            else return false;
+        }
+        else if(sym == 1) //OR
+        {
+            if (left == true || right == true) return true;
+            else return false;
+        }
+        else if(sym == 2) //XOR
+        {
+            if (left == true && right == false) return true;
+            else if (left == false && right == true) return true;
+            else return false;
+        }
+        else if (sym == 3) //NAND
+        {
+            if (left == true && right == true) return false;
+            else return true;
+        }
+        else if (sym == 4) //NOR
+        {
+            if (left == true || right == true) return false;
+            else return true;
+        }
+        else if (sym == 5) //XNOR
+        {
+            if (left == true && right == false) return false;
+            else if (left == false && right == true) return false;
+            else return true;
+        }
+        else if (sym == 6) //IMP LEFT
+        {
+            if (left == true && right == false) return false;
+            else return true;
+        }
+        else
+        {
+            if (left == false && right == true) return false;
+            else return true;
         }
     }
 
@@ -187,6 +257,7 @@ public class Logic : MonoBehaviour
         buttons[2].AddInteractionPunch();
         if (!_isSolved && _lightson)
         {
+            Debug.LogFormat("[Logic #{0}] Submits {1} and {2}. Expects {3} and {4}.", _moduleId, tog[0], tog[1], ans[0], ans[1]);
             if (tog[0] == ans[0] && tog[1] == ans[1])
             {
                 Debug.LogFormat("[Logic #{0}] Module solved.", _moduleId);
