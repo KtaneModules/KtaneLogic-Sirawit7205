@@ -49,6 +49,10 @@ public class Logic : MonoBehaviour
 
     void Init()
     {
+        //Randomize buttons
+        randomButtons(0);
+        randomButtons(1);
+
         //Generate Letters
         for (int i = 0; i < 6; i++)
         {
@@ -223,7 +227,7 @@ public class Logic : MonoBehaviour
             if (left == true && right == false) return false;
             else return true;
         }
-        else
+        else //IMP RIGHT
         {
             if (left == false && right == true) return false;
             else return true;
@@ -248,6 +252,17 @@ public class Logic : MonoBehaviour
                 Text[mode + 6].text = "F";
                 tog[mode] = false;
             }
+        }
+    }
+
+    void randomButtons(int n)
+    {
+        int rand = Random.Range(0, 2);
+        if(rand == 1)
+        {
+            buttons[n].GetComponent<MeshRenderer>().material.color = Color.green;
+            Text[n + 6].text = "T";
+            tog[n] = true;
         }
     }
 
