@@ -11,11 +11,12 @@ public class Logic : MonoBehaviour
     public TextMesh[] Text, sym;
     public KMBombInfo Bomb;
     public MeshRenderer[] notIndc;
+    public GameObject[] parenObject;
 
-    public bool[] tog, truthTable, ans = { false, false }, isNot;
-    public int[] num, randomSym, paren = { 0, 0 };
-    public int indcCounts;
-    public string[] symText = { "AND", "OR", "XOR", "NAND", "NOR", "XNOR", "→", "←" };
+    private bool[] tog = { false, false }, ans = { false, false }, isNot = new bool[6], truthTable = new bool[26];
+    private int[] paren = { 0, 0 }, num = new int[6], randomSym = new int[4];
+    private int indcCounts;
+    private string[] symText = { "AND", "OR", "XOR", "NAND", "NOR", "XNOR", "→", "←" };
 
     private bool _isSolved = false, _lightson = false;
 
@@ -64,25 +65,25 @@ public class Logic : MonoBehaviour
         paren[0] = Random.Range(0, 2);
         if(paren[0] == 0)
         {
-            Text[0].color = Color.green;
-            Text[1].color = Color.green;
+            parenObject[0].transform.localPosition = new Vector3(-0.076f, parenObject[0].transform.localPosition.y, parenObject[0].transform.localPosition.z);
+            parenObject[1].transform.localPosition = new Vector3(0.002f, parenObject[1].transform.localPosition.y, parenObject[1].transform.localPosition.z);
         }
         else
         {
-            Text[1].color = Color.green;
-            Text[2].color = Color.green;
+            parenObject[0].transform.localPosition = new Vector3(-0.028f, parenObject[0].transform.localPosition.y, parenObject[0].transform.localPosition.z);
+            parenObject[1].transform.localPosition = new Vector3(0.051f, parenObject[1].transform.localPosition.y, parenObject[1].transform.localPosition.z);
         }
 
         paren[1] = Random.Range(0, 2);
         if (paren[1] == 0)
         {
-            Text[3].color = Color.green;
-            Text[4].color = Color.green;
+            parenObject[2].transform.localPosition = new Vector3(-0.076f, parenObject[2].transform.localPosition.y, parenObject[2].transform.localPosition.z);
+            parenObject[3].transform.localPosition = new Vector3(0.002f, parenObject[3].transform.localPosition.y, parenObject[3].transform.localPosition.z);
         }
         else
         {
-            Text[4].color = Color.green;
-            Text[5].color = Color.green;
+            parenObject[2].transform.localPosition = new Vector3(-0.028f, parenObject[2].transform.localPosition.y, parenObject[2].transform.localPosition.z);
+            parenObject[3].transform.localPosition = new Vector3(0.051f, parenObject[3].transform.localPosition.y, parenObject[3].transform.localPosition.z);
         }
 
         //logic symbols
@@ -97,6 +98,12 @@ public class Logic : MonoBehaviour
             else if (randomSym[i] == 5) sym[i].text = "↔"; //XNOR
             else if (randomSym[i] == 6) sym[i].text = "→"; //IMP LEFT
             else sym[i].text = "←"; //IMP RIGHT
+
+            //adjust symbols sizes
+            if (randomSym[i] >= 5 && randomSym[i] <= 7)
+                sym[i].fontSize = 25;
+            else if (randomSym[i] == 2)
+                sym[i].fontSize = 40;
         }
 
         //NOT case

@@ -16,7 +16,8 @@ MonoBehaviour:
   description: "Special thanks to Hexicube and bitstim for helping me on Discord!
     This is the reupload of my module due to some problems with the initial upload.\r\n\r\nLogic
     is easy, but logic AND bomb defusal might not.\r\n\r\nModule ID: logic\r\n\r\nManual
-    HTML: https://ktane.timwi.de/HTML/Logic.html\r\nManual PDF: https://ktane.timwi.de/PDF/Logic.pdf"
+    HTML: https://ktane.timwi.de/HTML/Logic.html\r\nManual PDF: https://ktane.timwi.de/PDF/Logic.pdf\n\nThe
+    Inconsolata font is licensed under the SIL Open Font License, Version 1.1."
   version: 2.0
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 097d1ee3f62264045a61152de2cabd72, type: 3}
