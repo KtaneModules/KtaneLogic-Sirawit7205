@@ -13,10 +13,10 @@ public class Logic : MonoBehaviour
     public MeshRenderer[] notIndc;
     public GameObject[] parenObject;
 
-    private bool[] tog = { false, false }, ans = { false, false }, isNot = new bool[6], truthTable = new bool[26];
-    private int[] paren = { 0, 0 }, num = new int[6], randomSym = new int[4];
-    private int indcCounts;
-    private string[] symText = { "AND", "OR", "XOR", "NAND", "NOR", "XNOR", "→", "←" };
+    private readonly bool[] tog = { false, false }, ans = { false, false }, isNot = new bool[6], truthTable = new bool[26];
+    private readonly int[] paren = { 0, 0 }, num = new int[6], randomSym = new int[4];
+    private readonly int indcCounts;
+    private readonly string[] symText = { "AND", "OR", "XOR", "NAND", "NOR", "XNOR", "→", "←" };
 
     private bool _isSolved = false, _lightson = false;
 
@@ -43,7 +43,7 @@ public class Logic : MonoBehaviour
         };
         buttons[2].OnInteract += delegate ()
         {
-            checkAns();
+            CheckAns();
             return false;
         };
     }
@@ -51,8 +51,8 @@ public class Logic : MonoBehaviour
     void Init()
     {
         //Randomize buttons
-        randomButtons(0);
-        randomButtons(1);
+        RandomButtons(0);
+        RandomButtons(1);
 
         //Generate Letters
         for (int i = 0; i < 6; i++)
@@ -117,11 +117,11 @@ public class Logic : MonoBehaviour
             } 
         }
 
-        generateAns();
+        GenerateAns();
         _lightson = true;
     }
 
-    void generateAns()
+    void GenerateAns()
     {
         bool[] boolVal = { false, false, false, false, false, false };
         string[] dbgSym = { "", "", "", "", "", "" };
@@ -177,16 +177,16 @@ public class Logic : MonoBehaviour
             bool retTemp;
             if(paren[i] == 0)
             {
-                retTemp = calcLogic(boolVal[i * 3], boolVal[(i * 3) + 1], randomSym[i * 2]);
-                ans[i] = calcLogic(retTemp, boolVal[(i * 3) + 2], randomSym[(i * 2) + 1]);
+                retTemp = CalcLogic(boolVal[i * 3], boolVal[(i * 3) + 1], randomSym[i * 2]);
+                ans[i] = CalcLogic(retTemp, boolVal[(i * 3) + 2], randomSym[(i * 2) + 1]);
 
                 Debug.LogFormat("[Logic #{0}] Row #{1}: ( {2} {3} {4} ) {5} {6} = {7}", _moduleId, i + 1,
                     dbgSym[i * 3], symText[randomSym[i * 2]], dbgSym[(i * 3) + 1], symText[randomSym[(i * 2) + 1]], dbgSym[(i * 3) + 2], ans[i]);
             }
             else
             {
-                retTemp = calcLogic(boolVal[(i * 3) + 1], boolVal[(i * 3) + 2], randomSym[(i * 2) + 1]);
-                ans[i] = calcLogic(boolVal[i * 3], retTemp, randomSym[i * 2]);
+                retTemp = CalcLogic(boolVal[(i * 3) + 1], boolVal[(i * 3) + 2], randomSym[(i * 2) + 1]);
+                ans[i] = CalcLogic(boolVal[i * 3], retTemp, randomSym[i * 2]);
 
                 Debug.LogFormat("[Logic #{0}] Row #{1}: {2} {3} ( {4} {5} {6} ) = {7}", _moduleId, i + 1,
                     dbgSym[i * 3], symText[randomSym[i * 2]], dbgSym[(i * 3) + 1], symText[randomSym[(i * 2) + 1]], dbgSym[(i * 3) + 2], ans[i]);
@@ -195,7 +195,7 @@ public class Logic : MonoBehaviour
         }
     }
 
-    bool calcLogic(bool left, bool right, int sym)
+    bool CalcLogic(bool left, bool right, int sym)
     {
         if(sym == 0) //AND
         {
@@ -262,7 +262,7 @@ public class Logic : MonoBehaviour
         }
     }
 
-    void randomButtons(int n)
+    void RandomButtons(int n)
     {
         int rand = Random.Range(0, 2);
         if(rand == 1)
@@ -273,7 +273,7 @@ public class Logic : MonoBehaviour
         }
     }
 
-    void checkAns()
+    void CheckAns()
     {
         Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, buttons[2].transform);
         buttons[2].AddInteractionPunch();
