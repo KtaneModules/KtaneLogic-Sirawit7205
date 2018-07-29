@@ -294,6 +294,10 @@ public class Logic : MonoBehaviour
         }
     }
 
+#pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"Submit the answer for example, false and true, with “!{0} false true”.";
+#pragma warning restore 414
+
     KMSelectable[] ProcessTwitchCommand(string command)
     {
         var btn = new List<KMSelectable>();
