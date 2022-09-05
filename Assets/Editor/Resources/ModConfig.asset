@@ -11,13 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
   m_Name: ModConfig
   m_EditorClassIdentifier: 
-  id: Logic
-  title: Logic
-  description: "Special thanks to Hexicube and bitstim for helping me on Discord!
-    This is the reupload of my module due to some problems with the initial upload.\r\n\r\nLogic
-    is easy, but logic AND bomb defusal might not.\r\n\r\nModule ID: logic\r\n\r\nManual
-    HTML: https://ktane.timwi.de/HTML/Logic.html\r\nManual PDF: https://ktane.timwi.de/PDF/Logic.pdf\n\nThe
-    Inconsolata font is licensed under the SIL Open Font License, Version 1.1."
-  version: 2.0
+  id: Module
+  title: Module
+  author: Author
+  description: Module description
+  version: 1.0
   outputFolder: build
-  previewImage: {fileID: 2800000, guid: 097d1ee3f62264045a61152de2cabd72, type: 3}
+  previewImage: {fileID: 2800000, guid: bd5c1f4881f57d54481b44e4c8a7779a, type: 3}
