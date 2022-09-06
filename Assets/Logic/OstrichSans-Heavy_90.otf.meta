@@ -1,20 +1,22 @@
 fileFormatVersion: 2
-guid: 1ebe1d96973a920409b439b3a0e2bb63
-timeCreated: 1464546457
-licenseType: Pro
+guid: 270684b471ec90242b8c12405bc52324
 TrueTypeFontImporter:
+  externalObjects: {}
   serializedVersion: 4
   fontSize: 16
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
+  fontName: Ostrich Sans
   fontNames:
   - Ostrich Sans
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

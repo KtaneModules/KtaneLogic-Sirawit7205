@@ -7,15 +7,14 @@ using KMHelper;
 public class Logic : MonoBehaviour
 {
     public KMAudio Audio;
+    public KMBombInfo Bomb;
     public KMSelectable[] buttons;
     public TextMesh[] Text, sym;
-    public KMBombInfo Bomb;
     public MeshRenderer[] notIndc;
     public GameObject[] parenObject;
 
     private readonly bool[] tog = { false, false }, ans = { false, false }, isNot = new bool[6], truthTable = new bool[26];
     private readonly int[] paren = { 0, 0 }, num = new int[6], randomSym = new int[4];
-    private readonly int indcCounts;
     private readonly string[] symText = { "AND", "OR", "XOR", "NAND", "NOR", "XNOR", "→", "←" };
 
     private bool _isSolved = false, _lightson = false;
@@ -101,9 +100,9 @@ public class Logic : MonoBehaviour
 
             //adjust symbols sizes
             if (randomSym[i] >= 5 && randomSym[i] <= 7)
-                sym[i].fontSize = 25;
+                sym[i].fontSize = 100;
             else if (randomSym[i] == 2)
-                sym[i].fontSize = 40;
+                sym[i].fontSize = 160;
         }
 
         //NOT case
